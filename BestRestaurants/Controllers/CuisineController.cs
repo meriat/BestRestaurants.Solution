@@ -35,8 +35,14 @@ namespace BestRestaurants.Controllers
     [HttpPost("/cuisines/{id}/update")]
     public ActionResult Update(string newName, int id)
     {
-      Cuisine foundCuisine =Cuisine.Find(id);
+      Cuisine foundCuisine = Cuisine.Find(id);
       foundCuisine.Edit(newName);
+      return RedirectToAction("Index");
+    }
+    [HttpPost("/cuisines/{id}/delete")]
+    public ActionResult Delete(int id)
+    {
+      Cuisine.DeleteCuisine(id);
       return RedirectToAction("Index");
     }
   }
