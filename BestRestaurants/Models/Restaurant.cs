@@ -128,12 +128,12 @@ namespace BestRestaurants.Models
       }
     }
 
-    public void Edit(string newRestaurant)
+    public void Edit(string newRestaurant, int newRating)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = @"UPDATE restaurants SET name = @newRestaurant WHERE id = @searchId;";
+      cmd.CommandText = @"UPDATE restaurants SET name = @newRestaurant, rating = @newRating WHERE id = @searchId;";
 
       MySqlParameter searchId = new MySqlParameter();
       searchId.ParameterName = "@searchId";
@@ -145,7 +145,14 @@ namespace BestRestaurants.Models
       name.Value = newRestaurant;
       cmd.Parameters.Add(name);
 
+      MySqlParameter rating = new MySqlParameter();
+      rating.ParameterName = "@newRating";
+      rating.Value = newRating;
+      cmd.Parameters.Add(rating);
+
       this.Name = newRestaurant;
+      this.Rating = newRating;
+      
       cmd.ExecuteNonQuery();
 
       conn.Close();

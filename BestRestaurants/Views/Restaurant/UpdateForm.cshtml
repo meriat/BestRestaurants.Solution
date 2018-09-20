@@ -1,0 +1,11 @@
+@{
+  Layout = "_Layout";
+}
+
+<form action="/cuisines/@Model.Cuisine_Id/restaurants/@Model.Id" method="post">
+  <label for="newName">Edit Name </label>
+  <input type="text" name="newName" id="newName" value="@Model.Name" />
+  <label for="newRating">Edit Rating</label>
+  <input type="number" name="newRating" id="newRating" value="@Model.Rating" />
+  <button type="submit" class="btn btn-success">Update</button>
+</form>

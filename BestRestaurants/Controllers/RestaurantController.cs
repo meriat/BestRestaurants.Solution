@@ -14,5 +14,24 @@ namespace BestRestaurants.Controllers
       newRestaurant.Save();
       return RedirectToAction("Details", "Cuisine", new {id=cuisine_id});
     }
+    [HttpGet("/cuisines/{cuisine_id}/restaurants/{restaurant_id}/update")]
+    public ActionResult UpdateForm(int cuisine_id, int restaurant_id)
+    {
+      Restaurant newRestaurant = Restaurant.Find(restaurant_id);
+      return View(newRestaurant);
+    }
+    [HttpPost("/cuisines/{cuisine_id}/restaurants/{restaurant_id}")]
+    public ActionResult Update(int cuisine_id, int restaurant_id, string newName, int newRating)
+    {
+      Restaurant foundRestaurant = Restaurant.Find(restaurant_id);
+      foundRestaurant.Edit(newName, newRating);
+      return RedirectToAction("Details", "Cuisine", new {id=cuisine_id});
+    }
+    [HttpPost("/cuisines/{cuisine_id}/restaurants/{restaurant_id}/delete")]
+    public ActionResult Delete(int cuisine_id, int restaurant_id)
+    {
+      Restaurant.DeleteRestaurant(restaurant_id);
+      return RedirectToAction("Details", "Cuisine", new {id=cuisine_id});
+    }
   }
 }
