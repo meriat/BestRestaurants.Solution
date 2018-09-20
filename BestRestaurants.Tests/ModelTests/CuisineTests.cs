@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using BestRestaurants.Models;
 
-namespace BestRestaurants.TestTools
+namespace BestRestaurants.Tests
 {
   [TestClass]
   public class CuisineTests : IDisposable
@@ -12,6 +12,18 @@ namespace BestRestaurants.TestTools
     public void Dispose()
     {
       Cuisine.DeleteAll();
+
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      var cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = @"ALTER TABLE cuisines AUTO_INCREMENT = 1;";
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
     public CuisineTests()
     {
